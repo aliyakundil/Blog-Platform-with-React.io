@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import ArticlePage from "./ArticlePage";
+// import ArticlePage from './ArticlePage';
 import PopularTags from "./PopularTags";
 import Pagination from "./Pagination";
 
@@ -25,7 +25,7 @@ function ArticlesPage() {
   const [error, setError] = useState(null);
   const itemsPerPage = 3;
 
-  let pages = [];
+  const pages = [];
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
   }
@@ -44,7 +44,7 @@ function ArticlesPage() {
         setArticles(data.articles || []);
         setTotalPages(
           Math.ceil(
-            (data.articlesCount || data.articles.length) / itemsPerPage,
+            data.articlesCount / itemsPerPage,
           ),
         );
       } catch (err) {
@@ -81,15 +81,15 @@ function ArticlesPage() {
               <div className="page-header">
                 <div className="page-author">
                   <div className="page-author-icon">
-                    <i className="bx bxs-user"></i>
+                    <i className="bx bxs-user" />
                   </div>
-                  <div class EName="page-author-card">
+                  <div className="page-author-card">
                     <div className="author-name">{article.author.username}</div>
                     <div className="page-date">{formattedDate}</div>
                   </div>
                 </div>
                 <div className="page-likes">
-                  <i className="bx bxs-heart"></i>
+                  <i className="bx bxs-heart" />
                 </div>
               </div>
 
@@ -99,7 +99,7 @@ function ArticlesPage() {
                 </div>
                 <div className="page-description">{article.description}</div>
                 <div className="page-tag__article">
-                  {article.tagList.map(
+                  {article.tagList && article.tagList.map(
                     (tag) =>
                       article.tagList && (
                         <div key={tag} className="article-tag">

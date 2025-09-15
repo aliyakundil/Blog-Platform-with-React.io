@@ -35,3 +35,20 @@ npm run lint:fix
 # Форматирование Prettier
 
 npm run format
+
+# React Hook Form
+
+npm install react-hook-form
+
+# Создать новую ветку
+
+git checkout -b bugfix/review_feedbacks
+
+# Отправить ветку на удалённый репозиторий
+
+git push -u origin bugfix/review_feedbacks
+
+# Переключение между ветками
+
+git checkout main # вернуться на main
+git checkout bugfix/review_feedbacks # снова на созданную ветку

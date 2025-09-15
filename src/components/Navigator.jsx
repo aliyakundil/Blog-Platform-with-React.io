@@ -1,7 +1,8 @@
 import "boxicons/css/boxicons.min.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
-function Navigator() {
+function Navigator({ user }) {
   return (
     <div>
       <header className="header-blog">
@@ -26,10 +27,30 @@ function Navigator() {
               </Link>
             </li>
             <li className="nav-item user-profile">
-              <a href="/profile" className="nav-link">
-                <i className="bx bxs-user" />
-                eni9mu5
-              </a>
+              {user ? (
+                <>
+                  <Link to="/profile" className="nav-link">
+                    <i className="bx bxs-user"></i>
+                    {user.username}
+                  </Link>
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem("user");
+                      window.location.reload();
+                    }}
+                  >
+                    Выйти
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/sign-up" className="nav-link">
+                    <i className="bx bxs-user"></i>
+                    Войти
+                  </Link>
+                  {/* <Link to="/sign-up">Регистрация</Link> */}
+                </>
+              )}
             </li>
           </ul>
         </nav>

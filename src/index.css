@@ -376,3 +376,28 @@ header {
   color: white;
   font-weight: bold;
 }
+
+/* AuthForm */
+.author {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.authot-form {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  height: 278px;
+  gap: 20px;
+}
+
+button {
+  cursor: pointer;
+}
+
+label {
+  cursor: pointer;
+}
