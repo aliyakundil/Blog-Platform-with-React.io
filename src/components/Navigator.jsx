@@ -30,7 +30,7 @@ function Navigator({ user }) {
               {user ? (
                 <>
                   <Link to="/profile" className="nav-link">
-                    <i className="bx bxs-user"></i>
+                    <i className="bx bxs-user" />
                     {user.username}
                   </Link>
                   <button
@@ -44,11 +44,11 @@ function Navigator({ user }) {
                 </>
               ) : (
                 <>
-                  <Link to="/sign-up" className="nav-link">
-                    <i className="bx bxs-user"></i>
+                  <Link to="/sign-in" className="nav-link">
+                    <i className="bx bxs-user" />
                     Войти
                   </Link>
-                  {/* <Link to="/sign-up">Регистрация</Link> */}
+                  <Link to="/sign-up">Регистрация</Link>
                 </>
               )}
             </li>

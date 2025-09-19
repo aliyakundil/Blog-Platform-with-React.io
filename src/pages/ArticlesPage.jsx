@@ -42,11 +42,7 @@ function ArticlesPage() {
         const data = await res.json();
 
         setArticles(data.articles || []);
-        setTotalPages(
-          Math.ceil(
-            data.articlesCount / itemsPerPage,
-          ),
-        );
+        setTotalPages(Math.ceil(data.articlesCount / itemsPerPage));
       } catch (err) {
         setError(err.message);
       } finally {
@@ -99,14 +95,15 @@ function ArticlesPage() {
                 </div>
                 <div className="page-description">{article.description}</div>
                 <div className="page-tag__article">
-                  {article.tagList && article.tagList.map(
-                    (tag) =>
-                      article.tagList && (
-                        <div key={tag} className="article-tag">
-                          {tag}
-                        </div>
-                      ),
-                  )}
+                  {article.tagList &&
+                    article.tagList.map(
+                      (tag) =>
+                        article.tagList && (
+                          <div key={tag} className="article-tag">
+                            {tag}
+                          </div>
+                        ),
+                    )}
                 </div>
               </div>
             </div>
