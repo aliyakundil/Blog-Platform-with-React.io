@@ -29,26 +29,36 @@ function Navigator({ user }) {
             <li className="nav-item user-profile">
               {user ? (
                 <>
-                  <Link to="/profile" className="nav-link">
-                    <i className="bx bxs-user" />
-                    {user.username}
-                  </Link>
-                  <button
-                    onClick={() => {
-                      localStorage.removeItem("user");
-                      window.location.reload();
-                    }}
-                  >
-                    Выйти
-                  </button>
+                  <div className="nav-link">
+                    <Link to="/profile" className="username-link">
+                      <i className="bx bxs-user" />
+                      {user.username}
+                    </Link>
+
+                    <div className="logout-wrapper">
+                      <button
+                        className="logout-btn"
+                        onClick={() => {
+                          localStorage.removeItem("user");
+                          window.location.reload();
+                        }}
+                      >
+                        Выйти
+                      </button>
+                    </div>
+                  </div>
                 </>
               ) : (
                 <>
-                  <Link to="/sign-in" className="nav-link">
-                    <i className="bx bxs-user" />
-                    Войти
-                  </Link>
-                  <Link to="/sign-up">Регистрация</Link>
+                  <div className="nav-link">
+                    <Link to="/sign-in">
+                      <i className="bx bxs-user" />
+                      Войти
+                    </Link>
+                    <div className="logout-wrapper">
+                      <Link to="/sign-up" className="nav-link" >Регистрация</Link>
+                    </div>
+                  </div>
                 </>
               )}
             </li>

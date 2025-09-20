@@ -125,6 +125,34 @@ header {
   font-size: 14px;
 }
 
+.nav-link {
+  position: relative;
+  display: inline-block;
+}
+
+/* кнопка прячется по умолчанию */
+.logout-wrapper {
+  position: absolute;
+  top: 100%;  /* прямо под username */
+  left: 0;
+  display: none;   /* скрыто */
+}
+
+/* показываем, когда курсор либо на nav-link, либо на logout-wrapper */
+.nav-link:hover .logout-wrapper,
+.logout-wrapper:hover {
+  display: block;
+}
+
+.logout-btn {
+  padding: 6px 12px;
+  margin-top: 4px;
+  background: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+
 .nav-item a {
   all: inherit;
   text-decoration: none;
