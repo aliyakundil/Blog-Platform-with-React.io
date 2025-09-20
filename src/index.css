@@ -133,9 +133,9 @@ header {
 /* кнопка прячется по умолчанию */
 .logout-wrapper {
   position: absolute;
-  top: 100%;  /* прямо под username */
+  top: 100%; /* прямо под username */
   left: 0;
-  display: none;   /* скрыто */
+  display: none; /* скрыто */
 }
 
 /* показываем, когда курсор либо на nav-link, либо на logout-wrapper */
@@ -151,7 +151,6 @@ header {
   border: 1px solid #ccc;
   cursor: pointer;
 }
-
 
 .nav-item a {
   all: inherit;

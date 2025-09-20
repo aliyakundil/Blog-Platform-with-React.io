@@ -56,7 +56,9 @@ function Navigator({ user }) {
                       Войти
                     </Link>
                     <div className="logout-wrapper">
-                      <Link to="/sign-up" className="nav-link" >Регистрация</Link>
+                      <Link to="/sign-up" className="nav-link">
+                        Регистрация
+                      </Link>
                     </div>
                   </div>
                 </>

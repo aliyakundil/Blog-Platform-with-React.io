@@ -7,7 +7,10 @@ function Profile({ user, setUser }) {
 
   // Всегда инициализируем useForm
   const {
-    register, handleSubmit, reset, formState: { errors },
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
   } = useForm({
     defaultValues: {
       username: '',
@@ -78,22 +81,12 @@ function Profile({ user, setUser }) {
       />
       {errors.username && <span>Имя обязательно</span>}
 
-      <input
-        {...register('email', { required: true })}
-        placeholder="Email"
-      />
+      <input {...register('email', { required: true })} placeholder="Email" />
       {errors.email && <span>Email обязателен</span>}
 
-      <input
-        {...register('password')}
-        type="password"
-        placeholder="Пароль"
-      />
+      <input {...register('password')} type="password" placeholder="Пароль" />
 
-      <input
-        {...register('image')}
-        placeholder="Изображение"
-      />
+      <input {...register('image')} placeholder="Изображение" />
 
       <button type="submit">Сохранить</button>
     </form>

@@ -1,7 +1,5 @@
 import './App.css';
-import {
-  BrowserRouter, Routes, Route, Navigate,
-} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Hero from './components/Hero';
 import Navigator from './components/Navigator';
@@ -11,6 +9,7 @@ import AuthForm from './auth/AuthForm';
 import Register from './auth/Register';
 import Page from './auth/Page';
 import Profile from './auth/Profile';
+import NewArticle from './pages/NewArticle';
 
 function App() {
   const [user, setUser] = useState();
@@ -33,12 +32,17 @@ function App() {
       <Routes>
         <Route path="/" element={<ArticlesPage />} />
         <Route path="/articles/:slug" element={<ArticlePage />} />
+        <Route path="/new-article" element={<NewArticle />} />
         <Route path="/sign-in" element={<Page setUser={setUser} />} />
         <Route path="/sign-up" element={<Register setUser={setUser} />} />
         <Route
           path="/profile"
           element={
-            { user } ? <Profile user={user} setUser={setUser} /> : <AuthForm user={user} setUser={setUser} />
+            { user } ? (
+              <Profile user={user} setUser={setUser} />
+            ) : (
+              <AuthForm user={user} setUser={setUser} />
+            )
           }
         />
       </Routes>
