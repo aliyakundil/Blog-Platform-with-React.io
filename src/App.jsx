@@ -1,5 +1,7 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter, Routes, Route, Navigate,
+} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Hero from './components/Hero';
 import Navigator from './components/Navigator';
@@ -32,7 +34,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ArticlesPage />} />
         <Route path="/articles/:slug" element={<ArticlePage />} />
-        <Route path="/new-article" element={<NewArticle />} />
+        <Route path="/new-article" element={user ? <NewArticle /> : <Navigate to="/" />} />
         <Route path="/sign-in" element={<Page setUser={setUser} />} />
         <Route path="/sign-up" element={<Register setUser={setUser} />} />
         <Route

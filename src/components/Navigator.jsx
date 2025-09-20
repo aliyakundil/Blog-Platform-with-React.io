@@ -15,7 +15,7 @@ function Navigator({ user }) {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/editor" className="nav-link">
+              <Link to="/new-article" className="nav-link">
                 <i className="bx bx-pencil" />
                 New Post
               </Link>
