@@ -36,15 +36,22 @@ function Profile({ user, setUser }) {
     if (!user) return;
 
     const payload = {
-      username: String(data.username).trim(),
-      email: String(data.email).trim(),
+      username: data.username.trim() || '',
+      email: data.email.trim() || '',
+      password: data.password?.trim() || '',
+      image: data.image?.trim() || '',
     };
 
     // Добавляем только если что-то введено
-    if (data.password && data.password.trim() !== '') payload.password = String(data.password).trim();
-    if (data.image && data.image.trim() !== '') payload.image = String(data.image).trim();
+
+    if (data.password?.trim()) payload.password = data.password.trim();
+    if (data.image?.trim()) payload.image = data.image.trim();
+
+    const body = JSON.stringify(payload);
 
     console.log('Отправляем payload:', payload);
+    console.log(JSON.stringify({ user: payload }));
+    console.log('FINAL BODY:', JSON.stringify({ user: payload }));
 
     try {
       const response = await fetch('https://realworld.habsida.net/api/user', {
@@ -53,7 +60,7 @@ function Profile({ user, setUser }) {
           'Content-Type': 'application/json',
           Authorization: `Token ${user.token}`,
         },
-        body: JSON.stringify({ user: payload }),
+        body,
       });
 
       const result = await response.json();

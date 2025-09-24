@@ -1,20 +1,31 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
-function NewArticle({ user }) {
-  const navigate = useNavigate();
+function EditArticle({ user, article }) {
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+    register, handleSubmit, reset, formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: '',
+      description: '',
+      body: '',
+    },
+  });
 
-  if (!user) return <p>Загрузка...</p>;
+  useEffect(() => {
+    if (article) {
+      reset({
+        title: article.title,
+        description: article.description,
+        body: article.body,
+      });
+    }
+  }, [article, reset]);
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch('https://realworld.habsida.net/api/articles', {
-        method: 'POST',
+      const response = await fetch(`https://realworld.habsida.net/api/articles/${article.slug}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Token ${user.token}`,
@@ -22,20 +33,17 @@ function NewArticle({ user }) {
         body: JSON.stringify({ article: data }),
       });
 
-      const result = await response.json();
+      const text = await response.text();
+      const result = text ? JSON.parse(text) : {};
+
       if (!response.ok) {
         console.log('Ошибка сервера:', result);
         return;
       }
 
-      navigate('/');
+      navigate(`/articles/${result.article.slug}`);
     } catch (err) {
-      if (err.errors && err.errors.body) {
-        // выводим ошибки, которые пришли с сервера
-        console.log('Ошибки сервера:', err.errors.body.join(', '));
-      } else {
-        console.log('Другая ошибка:', err.message);
-      }
+      console.log('Сетевая ошибка или некорректный JSON:', err.message);
     }
   };
 
@@ -60,7 +68,7 @@ function NewArticle({ user }) {
         </div>
       </div>
     </form>
-
   );
 }
-export default NewArticle;
+
+export default EditArticle;

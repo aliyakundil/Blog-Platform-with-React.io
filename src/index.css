@@ -149,6 +149,7 @@ header {
   margin-top: 4px;
   border: none;
   cursor: pointer;
+  color: #333333;
 }
 
 .nav-item a {
@@ -233,6 +234,34 @@ header {
   line-height: 24px;
   font-weight: 400px;
   color: #aaaaaa;
+}
+
+/* ArticlePage */
+.article-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: 20px;
+}
+
+.article-page__title {
+  margin-top: 30px;
+  margin-left: 70px;
+}
+
+.article-page__description{
+  margin-left: 73px;
+}
+
+.article-page__body {
+  margin-left: 5px;
+}
+
+.article-change {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
 }
 
 /* PopularTags */

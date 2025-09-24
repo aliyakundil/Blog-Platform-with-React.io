@@ -12,9 +12,10 @@ import Register from './auth/Register';
 import Page from './auth/Page';
 import Profile from './auth/Profile';
 import NewArticle from './pages/NewArticle';
+import EditArticle from './pages/EditArticle';
 
 function App() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
@@ -33,14 +34,18 @@ function App() {
       <Hero />
       <Routes>
         <Route path="/" element={<ArticlesPage />} />
-        <Route path="/articles/:slug" element={<ArticlePage />} />
-        <Route path="/new-article" element={user ? <NewArticle /> : <Navigate to="/" />} />
+        <Route path="/articles/:slug" element={<ArticlePage user={user} />} />
+        <Route path="/new-article" element={user ? <NewArticle user={user} setUser={setUser} /> : <Navigate to="/" />} />
+        <Route
+          path="/articles/:slug/edit"
+          element={user ? <EditArticle user={user} setUser={setUser} /> : <Navigate to="/login" />}
+        />
         <Route path="/sign-in" element={<Page setUser={setUser} />} />
         <Route path="/sign-up" element={<Register setUser={setUser} />} />
         <Route
           path="/profile"
           element={
-            { user } ? (
+            user ? (
               <Profile user={user} setUser={setUser} />
             ) : (
               <AuthForm user={user} setUser={setUser} />
