@@ -39,7 +39,7 @@ function ArticlePage({ user }) {
   });
 
   const handleEdit = () => {
-    navigate(`/articles/${article.slug}/edit`);
+    navigate(`/articles/${article.slug}/edit`, { state: { article } });
   };
 
   const handleDelete = async () => {

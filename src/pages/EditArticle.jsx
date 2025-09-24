@@ -1,7 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-function EditArticle({ user, article }) {
+function EditArticle({ user }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const article = location.state?.article;
+
   const {
     register, handleSubmit, reset, formState: { errors },
   } = useForm({
@@ -22,6 +27,8 @@ function EditArticle({ user, article }) {
     }
   }, [article, reset]);
 
+  if (!article) return <p>Загрузка статьи...</p>; // Ждем article
+
   const onSubmit = async (data) => {
     try {
       const response = await fetch(`https://realworld.habsida.net/api/articles/${article.slug}`, {
@@ -33,8 +40,10 @@ function EditArticle({ user, article }) {
         body: JSON.stringify({ article: data }),
       });
 
-      const text = await response.text();
-      const result = text ? JSON.parse(text) : {};
+      // const text = await response.text();
+      // const result = text ? JSON.parse(text) : {};
+
+      const result = await response.json();
 
       if (!response.ok) {
         console.log('Ошибка сервера:', result);

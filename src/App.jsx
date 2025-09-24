@@ -30,7 +30,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navigator user={user} />
+      <Navigator user={user} setUser={setUser} />
       <Hero />
       <Routes>
         <Route path="/" element={<ArticlesPage />} />
@@ -38,7 +38,7 @@ function App() {
         <Route path="/new-article" element={user ? <NewArticle user={user} setUser={setUser} /> : <Navigate to="/" />} />
         <Route
           path="/articles/:slug/edit"
-          element={user ? <EditArticle user={user} setUser={setUser} /> : <Navigate to="/login" />}
+          element={user ? <EditArticle user={user} setUser={setUser} /> : <Navigate to="/" />}
         />
         <Route path="/sign-in" element={<Page setUser={setUser} />} />
         <Route path="/sign-up" element={<Register setUser={setUser} />} />

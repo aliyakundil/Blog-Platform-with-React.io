@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 // import ArticlePage from './ArticlePage';
-import PopularTags from "./PopularTags";
-import Pagination from "./Pagination";
+import PopularTags from './PopularTags';
+import Pagination from './Pagination';
 
-const API_URL = "https://realworld.habsida.net/api/articles";
+const API_URL = 'https://realworld.habsida.net/api/articles';
 
 function ArticlesPage() {
   const [articles, setArticles] = useState([]);
@@ -15,7 +15,7 @@ function ArticlesPage() {
       .then((data) => {
         setArticles(data.articles);
       })
-      .catch((err) => console.error("Ошибка загрузки", err));
+      .catch((err) => console.error('Ошибка загрузки', err));
   }, []);
 
   /* Пагинация */
@@ -38,7 +38,7 @@ function ArticlesPage() {
         const res = await fetch(
           `${API_URL}?limit=${itemsPerPage}&offset=${(currentPage - 1) * itemsPerPage}`,
         );
-        if (!res.ok) throw new Error("Ошибка загрузки");
+        if (!res.ok) throw new Error('Ошибка загрузки');
         const data = await res.json();
 
         setArticles(data.articles || []);
@@ -59,17 +59,17 @@ function ArticlesPage() {
       <PopularTags />
 
       {loading && <div>Загрузка...</div>}
-      {error && <div style={{ color: "red" }}>{error}</div>}
+      {error && <div style={{ color: 'red' }}>{error}</div>}
 
       {/* Статьи */}
-      {!loading &&
-        !error &&
-        articles.map((article) => {
+      {!loading
+        && !error
+        && articles.map((article) => {
           const date = new Date(article.createdAt);
-          const formattedDate = date.toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
+          const formattedDate = date.toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
           });
 
           return (
@@ -95,14 +95,13 @@ function ArticlesPage() {
                 </div>
                 <div className="page-description">{article.description}</div>
                 <div className="page-tag__article">
-                  {article.tagList &&
-                    article.tagList.map(
-                      (tag) =>
-                        article.tagList && (
-                          <div key={tag} className="article-tag">
-                            {tag}
-                          </div>
-                        ),
+                  {article.tagList
+                    && article.tagList.map(
+                      (tag) => article.tagList && (
+                      <div key={tag} className="article-tag">
+                        {tag}
+                      </div>
+                      ),
                     )}
                 </div>
               </div>

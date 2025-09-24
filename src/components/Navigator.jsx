@@ -1,8 +1,7 @@
-import "boxicons/css/boxicons.min.css";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, Link } from 'react-router-dom';
 
-function Navigator({ user }) {
+function Navigator({ user, setUser }) {
+  const navigate = useNavigate();
   return (
     <div>
       <header className="header-blog">
@@ -28,40 +27,38 @@ function Navigator({ user }) {
             </li>
             <li className="nav-item user-profile">
               {user ? (
-                <>
-                  <div className="nav-link">
-                    <Link to="/profile" className="username-link">
-                      <i className="bx bxs-user" />
-                      {user.username}
-                    </Link>
+                <div className="nav-link">
+                  <Link to="/profile" className="username-link">
+                    <i className="bx bxs-user" />
+                    {user.username}
+                  </Link>
 
-                    <div className="logout-wrapper">
-                      <button
-                        className="logout-btn"
-                        onClick={() => {
-                          localStorage.removeItem("user");
-                          window.location.reload();
-                        }}
-                      >
-                        Выйти
-                      </button>
-                    </div>
+                  <div className="logout-wrapper">
+                    <button
+                      className="logout-btn"
+                      onClick={() => {
+                        localStorage.removeItem('user');
+                        // window.location.reload();
+                        setUser(null); // очищаем состояние пользователя
+                        navigate('/'); // перенаправляем на главную
+                      }}
+                    >
+                      Выйти
+                    </button>
                   </div>
-                </>
+                </div>
               ) : (
-                <>
-                  <div className="nav-link">
-                    <Link to="/sign-in">
-                      <i className="bx bxs-user" />
-                      Войти
+                <div className="nav-link">
+                  <Link to="/sign-in">
+                    <i className="bx bxs-user" />
+                    Войти
+                  </Link>
+                  <div className="logout-wrapper">
+                    <Link to="/sign-up" className="nav-link">
+                      Регистрация
                     </Link>
-                    <div className="logout-wrapper">
-                      <Link to="/sign-up" className="nav-link">
-                        Регистрация
-                      </Link>
-                    </div>
                   </div>
-                </>
+                </div>
               )}
             </li>
           </ul>
