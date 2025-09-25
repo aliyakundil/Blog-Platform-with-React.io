@@ -1,3 +1,4 @@
+import 'boxicons/css/boxicons.min.css';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Navigator({ user, setUser }) {

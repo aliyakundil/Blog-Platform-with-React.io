@@ -35,7 +35,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ArticlesPage />} />
         <Route path="/articles/:slug" element={<ArticlePage user={user} />} />
-        <Route path="/new-article" element={user ? <NewArticle user={user} setUser={setUser} /> : <Navigate to="/" />} />
+        <Route path="/new-article" element={user ? <NewArticle user={user} setUser={setUser} /> : <Page setUser={setUser} />} />
         <Route
           path="/articles/:slug/edit"
           element={user ? <EditArticle user={user} setUser={setUser} /> : <Navigate to="/" />}
