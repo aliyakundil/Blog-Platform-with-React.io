@@ -41,11 +41,11 @@ function Page({ setUser }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="author">
-      <input
+      {/* <input
         {...register('username', { required: true, minLength: 3 })}
         placeholder="Имя пользователя"
       />
-      {errors.username && <span>Имя должно быть от 3 до 20 символов</span>}
+      {errors.username && <span>Имя должно быть от 3 до 20 символов</span>} */}
 
       <input
         type="email"

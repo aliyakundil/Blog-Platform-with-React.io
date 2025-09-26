@@ -91,9 +91,34 @@ function Profile({ user, setUser }) {
       <input {...register('email', { required: true })} placeholder="Email" />
       {errors.email && <span>Email обязателен</span>}
 
-      <input {...register('password')} type="password" placeholder="Пароль" />
+      <input
+        type="password"
+        {...register('password', {
+          required: true,
+          minLength: 6,
+          maxLength: 40,
+        })}
+        placeholder="Пароль"
+      />
+      {errors.password && <span>Пароль 6-40 символов</span>}
 
-      <input {...register('image')} placeholder="Изображение" />
+      <input
+        {...register('image', {
+          validate: (value) => {
+            if (!value) return true; // пустое поле разрешаем
+            try {
+              new URL(value); // если new URL не упадёт → значит строка валидный URL
+              return true;
+            } catch {
+              return 'Ссылка должна быть корректным URL';
+            }
+          },
+        })}
+        placeholder="Изображение"
+      />
+      {errors.password && (
+        <span>Изображение аватара должно иметь действительный URL-адрес</span>
+      )}
 
       <button type="submit">Сохранить</button>
     </form>

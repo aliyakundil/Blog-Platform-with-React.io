@@ -1,10 +1,10 @@
-import { useState } from "react";
-
-function AuthForm({ register, errors, watch, onSubmit }) {
+function AuthForm({
+  register, errors, watch, onSubmit,
+}) {
   return (
     <form onSubmit={onSubmit} className="author">
       <input
-        {...register("username", {
+        {...register('username', {
           required: true,
           minLength: 3,
           maxLength: 20,
@@ -14,7 +14,7 @@ function AuthForm({ register, errors, watch, onSubmit }) {
       {errors.username && <span>Имя должно быть от 3 до 20 символов</span>}
 
       <input
-        {...register("email", {
+        {...register('email', {
           required: true,
           pattern: /^[^@]+@[^@]+\.[^@]+$/,
         })}
@@ -24,7 +24,7 @@ function AuthForm({ register, errors, watch, onSubmit }) {
 
       <input
         type="password"
-        {...register("password", {
+        {...register('password', {
           required: true,
           minLength: 6,
           maxLength: 40,
@@ -35,15 +35,16 @@ function AuthForm({ register, errors, watch, onSubmit }) {
 
       <input
         type="password"
-        {...register("confirmPassword", {
-          validate: (value) => value === watch("password"),
+        {...register('confirmPassword', {
+          validate: (value) => value === watch('password'),
         })}
         placeholder="Подтвердите пароль"
       />
       {errors.confirmPassword && <span>Пароли не совпадают</span>}
 
       <label>
-        <input type="checkbox" {...register("agreement", { required: true })} />{" "}
+        <input type="checkbox" {...register('agreement', { required: true })} />
+        {' '}
         Я принимаю условия
       </label>
       {errors.agreement && <span>Необходимо согласие</span>}

@@ -43,7 +43,9 @@ function ArticlePage({ user }) {
   };
 
   const handleDelete = async () => {
-    const confirmed = window.confirm('Вы уверены, что хотите удалить эту статью?');
+    const confirmed = window.confirm(
+      'Вы уверены, что хотите удалить эту статью?',
+    );
     if (!confirmed) return;
     try {
       const response = await fetch(`${API_URL}/${slug}`, {
@@ -91,17 +93,12 @@ function ArticlePage({ user }) {
         </div>
 
         <div className="article-change">
-          {user
-            && <button onClick={handleEdit}>Редактировать</button>}
+          {user && <button onClick={handleEdit}>Редактировать</button>}
 
-          {user
-            && <button onClick={handleDelete}>Удалить</button>}
-
+          {user && <button onClick={handleDelete}>Удалить</button>}
         </div>
-
       </div>
     </div>
-
   );
 }
 

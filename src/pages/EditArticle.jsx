@@ -8,7 +8,10 @@ function EditArticle({ user }) {
   const article = location.state?.article;
 
   const {
-    register, handleSubmit, reset, formState: { errors },
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
   } = useForm({
     defaultValues: {
       title: '',
@@ -31,14 +34,17 @@ function EditArticle({ user }) {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch(`https://realworld.habsida.net/api/articles/${article.slug}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Token ${user.token}`,
+      const response = await fetch(
+        `https://realworld.habsida.net/api/articles/${article.slug}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${user.token}`,
+          },
+          body: JSON.stringify({ article: data }),
         },
-        body: JSON.stringify({ article: data }),
-      });
+      );
 
       // const text = await response.text();
       // const result = text ? JSON.parse(text) : {};
@@ -62,15 +68,24 @@ function EditArticle({ user }) {
         <div className="page">
           <label>
             Заголовок
-            <input className="new-article article-page__title" {...register('title', { required: true })} />
+            <input
+              className="new-article article-page__title"
+              {...register('title', { required: true })}
+            />
           </label>
           <label>
             Описание
-            <input className="new-article article-page__description" {...register('description', { required: true })} />
+            <input
+              className="new-article article-page__description"
+              {...register('description', { required: true })}
+            />
           </label>
           <label>
             Содержание текста
-            <textarea className="new-article article-page__body" {...register('body', { required: true })} />
+            <textarea
+              className="new-article article-page__body"
+              {...register('body', { required: true })}
+            />
           </label>
 
           <button type="submit">Сохранить</button>
