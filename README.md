@@ -1,3 +1,26 @@
+# Инструкция
+
+# Платформа блога Blog Platform with React
+
+Простая платформа для блогов на React. Пользователи могут создавать, редактировать и удалять статьи, ставить «Нравится» и управлять своим профилем.
+
+---
+
+## Демо
+
+[Посмотреть сайт вживую на Vercel](https://blog-platform-with-react-io.vercel.app/)
+
+---
+
+## Возможности
+
+- Регистрация и вход пользователей
+- Создание, редактирование и удаление статей
+- Ставить «Нравится» публикациям
+- Редактировать профиль (имя, email, аватар, пароль)
+
+---
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -149,3 +172,7 @@ npm run build
 и зарегистрируйся (можно через GitHub).
 
 После входа нажми New Project → Import Git Repository.
+
+```
+
+```
