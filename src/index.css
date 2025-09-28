@@ -264,6 +264,14 @@ header {
   gap: 20px;
 }
 
+.page-likes {
+  cursor: pointer;
+}
+
+.button-likes {
+  border: none;
+}
+
 /* PopularTags */
 .page {
   display: flex;

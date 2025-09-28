@@ -8,6 +8,7 @@ const API_URL = 'https://realworld.habsida.net/api/articles';
 
 function ArticlesPage() {
   const [articles, setArticles] = useState([]);
+  const [likes, setLikes] = useState(0);
 
   useEffect(() => {
     fetch(API_URL)
@@ -53,6 +54,16 @@ function ArticlesPage() {
     fetchArticles();
   }, [currentPage]);
 
+  // Лайки
+  const handleLikes = () => {
+    if (!likes) {
+      setLikes(likes + 1)
+    }
+    else {
+      setLikes(likes - 1)
+    }
+  }
+
   return (
     <div className="articles-page">
       {/* Теги */}
@@ -84,9 +95,11 @@ function ArticlesPage() {
                     <div className="page-date">{formattedDate}</div>
                   </div>
                 </div>
-                <div className="page-likes">
-                  <i className="bx bxs-heart" />
-                </div>
+                <button onClick={handleLikes} className="button-likes">
+                  <div className="page-likes">
+                    <i className="bx bxs-heart" /> {article.favoritesCount + likes }    
+                  </div>
+                </button>
               </div>
 
               <div className="page-card">
