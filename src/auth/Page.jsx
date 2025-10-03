@@ -41,30 +41,29 @@ function Page({ setUser }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="author">
-      {/* <input
-        {...register('username', { required: true, minLength: 3 })}
-        placeholder="Имя пользователя"
-      />
-      {errors.username && <span>Имя должно быть от 3 до 20 символов</span>} */}
+      <div className="sign">
+        <div className="title">
+          <h3>Sign In</h3>
+        </div>
+        <input
+          type="email"
+          {...register('email', {
+            required: true,
+            pattern: /^[^@]+@[^@]+\.[^@]+$/,
+          })}
+          placeholder="Email"
+        />
+        {errors.email && <span>Invalid email</span>}
 
-      <input
-        type="email"
-        {...register('email', {
-          required: true,
-          pattern: /^[^@]+@[^@]+\.[^@]+$/,
-        })}
-        placeholder="Email"
-      />
-      {errors.email && <span>Неверный email</span>}
+        <input
+          type="password"
+          {...register('password', { required: true, minLength: 6 })}
+          placeholder="Password"
+        />
+        {errors.password && <span>Password must be 6–40 characters</span>}
 
-      <input
-        type="password"
-        {...register('password', { required: true, minLength: 6 })}
-        placeholder="Пароль"
-      />
-      {errors.password && <span>Пароль 6-40 символов</span>}
-
-      <button type="submit">Войти</button>
+        <button type="submit" className="btn-sign">Sign In</button>
+      </div>
     </form>
   );
 }

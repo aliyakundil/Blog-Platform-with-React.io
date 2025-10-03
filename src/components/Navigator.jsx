@@ -36,6 +36,7 @@ function Navigator({ user, setUser }) {
 
                   <div className="logout-wrapper">
                     <button
+                      type="button"
                       className="logout-btn"
                       onClick={() => {
                         localStorage.removeItem('user');
@@ -44,21 +45,25 @@ function Navigator({ user, setUser }) {
                         navigate('/'); // перенаправляем на главную
                       }}
                     >
-                      Выйти
+                      Log out
                     </button>
                   </div>
                 </div>
               ) : (
                 <div className="nav-link">
-                  <Link to="/sign-in">
-                    <i className="bx bxs-user" />
-                    Войти
-                  </Link>
-                  <div className="logout-wrapper">
-                    <Link to="/sign-up" className="nav-link">
-                      Регистрация
+                  {user ? (
+                    <Link to="/profile">
+                      <i className="bx bxs-user" />
+                      {' '}
+                      {user.username}
                     </Link>
-                  </div>
+                  ) : (
+                    <Link to="/sign-in">
+                      <i className="bx bxs-user" />
+                      {' '}
+                      Sign In
+                    </Link>
+                  )}
                 </div>
               )}
             </li>

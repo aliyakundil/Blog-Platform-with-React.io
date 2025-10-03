@@ -3,69 +3,54 @@ import { Link } from 'react-router-dom';
 // import ArticlePage from './ArticlePage';
 import PopularTags from './PopularTags';
 import Pagination from './Pagination';
-import Hero from '../components/Hero';
 
 const API_URL = 'https://realworld.habsida.net/api/articles';
 
-function ArticlesPage() {
+function Profile({ user }) {
   const [articles, setArticles] = useState([]);
-
-  useEffect(() => {
-    fetch(API_URL)
-      .then((res) => res.json())
-      .then((data) => {
-        setArticles(data.articles);
-      })
-      .catch((err) => console.error('Ошибка загрузки', err));
-  }, []);
-
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const res = await fetch(`${API_URL}?limit=100`); // все статьи для фильтрации
-        const data = await res.json();
-        setArticles(data.articles || []);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchArticles();
-  }, []);
+  const [filter, setFilter] = useState('my');
 
   /* Пагинация */
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  // const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const itemsPerPage = 3;
-
-  const pages = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push(i);
-  }
 
   useEffect(() => {
     const fetchArticles = async () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(
-          `${API_URL}?limit=${itemsPerPage}&offset=${(currentPage - 1) * itemsPerPage}`,
-        );
+        const res = await fetch(`${API_URL}?limit=100`); // загружаем все статьи
         if (!res.ok) throw new Error('Ошибка загрузки');
         const data = await res.json();
-
         setArticles(data.articles || []);
-        setTotalPages(Math.ceil(data.articlesCount / itemsPerPage));
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
-
     fetchArticles();
-  }, [currentPage]);
+  }, []);
+
+  const itemsPerPage = 3;
+
+  const articlesToShow = articles.filter((article) => {
+    const isMine = article.author.username === user?.username;
+    const isFavorite = user?.favoriteArticles?.includes(article.slug);
+    return isMine || isFavorite;
+  });
+
+  const totalPages = Math.ceil(articlesToShow.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedArticles = articlesToShow.slice(startIndex, endIndex);
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter]);
 
   // Лайки
   const handleLikes = (slug) => {
@@ -85,26 +70,47 @@ function ArticlesPage() {
   };
 
   return (
-    <>
-      <Hero />
-      <div className="articles-page">
-        {/* Теги */}
-        <PopularTags />
+    <div className="articles-page profile">
 
-        {loading && (
-          <div>
-            <div className="article-page__spin">
-              <i className="bx bx-revision spin" />
-              <div className="article-loading">Loading</div>
+      <div className="user">
+        <div className="user-avatar">
+          <img
+            src="https://pm1.aminoapps.com/7620/1e77e3a13124a5f7b3bf5484eb5c2da285b3d02cr1-700-690v2_hq.jpg"
+            alt="User Avatar"
+            style={{ width: '132px', height: '132px', borderRadius: '50%' }}
+          />
+        </div>
+        <div className="user-name">
+          <h3>{user.username}</h3>
+        </div>
+        <div className="user-text">
+          <button type="button" className="btn-text">
+            <div className="heart">
+              <i className="bx bx-heart-circle" />
             </div>
-          </div>
-        )}
-        {error && <div style={{ color: 'red' }}>{error}</div>}
+            <div className="text">
+              Text
+            </div>
+          </button>
+        </div>
+      </div>
+      {/* Теги */}
+      <PopularTags />
 
-        {/* Статьи */}
-        {!loading
+      {loading && (
+      <div>
+        <div className="article-page__spin">
+          <i className="bx bx-revision spin" />
+          <div className="article-loading">Loading</div>
+        </div>
+      </div>
+      )}
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+
+      {/* Статьи */}
+      {!loading
           && !error
-          && articles.map((article) => {
+          && paginatedArticles.map((article) => {
             const date = new Date(article.createdAt);
             const formattedDate = date.toLocaleDateString('en-GB', {
               day: 'numeric',
@@ -161,17 +167,16 @@ function ArticlesPage() {
             );
           })}
 
-        {/* Pagination внизу страницы */}
-        <div className="paginator">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-            pages={pages}
-          />
-        </div>
+      {/* Pagination внизу страницы */}
+      <div className="paginator">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          pages={pages}
+        />
       </div>
-    </>
+    </div>
   );
 }
-export default ArticlesPage;
+export default Profile;

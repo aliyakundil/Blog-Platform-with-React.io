@@ -6,10 +6,17 @@ function NewArticle({ user }) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm();
 
-  if (!user) return <p>Загрузка...</p>;
+  if (!user) {
+    return (
+      <div className="article-page__spin">
+        <i className="bx bx-revision spin" />
+        <div className="article-loading">Loading</div>
+      </div>
+    );
+  }
 
   const onSubmit = async (data) => {
     try {
@@ -45,30 +52,26 @@ function NewArticle({ user }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="article-page">
-        <div className="page">
-          <label>
-            Заголовок
-            <input
-              className="new-article article-page__title"
-              {...register('title', { required: true })}
-            />
-          </label>
-          <label>
-            Описание
-            <input
-              className="new-article article-page__description"
-              {...register('description', { required: true })}
-            />
-          </label>
-          <label>
-            Содержание текста
-            <textarea
-              className="new-article article-page__body"
-              {...register('body', { required: true })}
-            />
-          </label>
+        <div className="sign">
+          <input
+            className="new-article"
+            placeholder="Title"
+            {...register('title', { required: true })}
+          />
+          <input
+            className="new-article"
+            placeholder="Short description"
+            {...register('description', { required: true })}
+          />
+          <textarea
+            className="new-article"
+            placeholder="Input your text"
+            {...register('body', { required: true })}
+          />
 
-          <button type="submit">Сохранить</button>
+          <button type="submit" className="btn-sign">
+            Publish Article
+          </button>
         </div>
       </div>
     </form>

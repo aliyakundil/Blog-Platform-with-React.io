@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 
 const API_URL = 'https://realworld.habsida.net/api/articles';
 
-function ArticlePage({ user }) {
+function ArticlePage({ user, toggleFavorite, isFavorite }) {
   const navigate = useNavigate();
   const { slug } = useParams(); // Получаем slug статьи из URL
   const [article, setArticle] = useState(null);
@@ -28,9 +28,16 @@ function ArticlePage({ user }) {
     fetchArticle();
   }, [slug]);
 
-  if (loading) return <div className="article-page">Загрузка...</div>;
+  if (loading) {
+    return (
+      <div className="article-page__spin">
+        <i className="bx bx-revision spin" />
+        <div className="article-loading">Loading</div>
+      </div>
+    );
+  }
   if (error) return <div style={{ color: 'red' }}>{error}</div>;
-  if (!article) return <div>Статья не найдена</div>;
+  if (!article) return <div>Article not found</div>;
 
   const date = new Date(article.createdAt).toLocaleDateString('en-GB', {
     day: 'numeric',
@@ -71,31 +78,73 @@ function ArticlePage({ user }) {
     }
   };
 
+  console.log(isFavorite(article.slug));
+
   return (
-    <div className="article-page">
+    <div className="article-page-open">
+      <div className="page-open">
+        <div className="page-open-title">
+          <h1>{article.title}</h1>
+        </div>
+        <div className="page-author">
+          <div className="page-author-icon">
+            <i className="bx bx-user-circle" />
+          </div>
+          <div className="page-author-card">
+            <div className="author-name">{article.author.username}</div>
+            <div className="page-date">{date}</div>
+          </div>
+        </div>
+      </div>
       <div className="page">
-        <h1>{article.title}</h1>
-        <div className="author-name">
-          <span>{article.author.username}</span>
-          {' '}
-          |
-          <span>{date}</span>
-        </div>
-        <div className="article-tags">
-          {article.tagList.map((tag) => (
-            <span key={tag} className="article-tag">
-              {tag}
-            </span>
-          ))}
-        </div>
         <div className="article-content">
           <ReactMarkdown>{article.body}</ReactMarkdown>
         </div>
 
-        <div className="article-change">
-          {user && <button onClick={handleEdit}>Редактировать</button>}
+        <div className="page-tag__article">
+          {article.tagList
+            && article.tagList.map(
+              (tag) => article.tagList && (
+              <div key={tag} className="article-tag">
+                {tag}
+              </div>
+              ),
+            )}
+        </div>
 
-          {user && <button onClick={handleDelete}>Удалить</button>}
+        <div className="article-fav">
+          {user && user.username === article.author.username && (
+            <div className="fav-button">
+              <button type="button" className="fav-artl" onClick={handleEdit}>
+                Edit
+              </button>
+              <button
+                type="button"
+                className="fav-artl"
+                onClick={handleDelete}
+              >
+                Delete
+              </button>
+            </div>
+          )}
+
+          <div className="article-fav-add">
+            <div className="page-author fav">
+              <div className="page-author-icon">
+                <i className="bx bx-user-circle" />
+              </div>
+              <div className="page-author-card">
+                <div className="author-name">{article.author.username}</div>
+                <div className="page-date">{date}</div>
+              </div>
+            </div>
+            <div className="page-author fav">
+              <button type="button" className={!isFavorite(article.slug) ? 'fav-artl-none' : 'fav-artl-yes'} onClick={() => toggleFavorite(article.slug)}>
+                Favorite article
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

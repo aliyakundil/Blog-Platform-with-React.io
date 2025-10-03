@@ -1,11 +1,14 @@
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 function EditArticle({ user }) {
+  const { slug } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const article = location.state?.article;
+  const [article, setArticle] = useState(location.state?.article || null);
+  const [loading, setLoading] = useState(!location.state?.article);
+  const [error, setError] = useState(null);
 
   const {
     register,
@@ -21,21 +24,50 @@ function EditArticle({ user }) {
   });
 
   useEffect(() => {
-    if (article) {
+    if (!article) {
+      const fetchArticle = async () => {
+        setLoading(true);
+        try {
+          const res = await fetch(
+            `https://realworld.habsida.net/api/articles/${slug}`,
+          );
+          if (!res.ok) throw new Error('Ошибка загрузки статьи');
+          const data = await res.json();
+          setArticle(data.article);
+          reset({
+            title: data.article.title,
+            description: data.article.description,
+            body: data.article.body,
+          });
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchArticle();
+    } else {
       reset({
         title: article.title,
         description: article.description,
         body: article.body,
       });
     }
-  }, [article, reset]);
+  }, [article, slug, reset]);
 
-  if (!article) return <p>Загрузка статьи...</p>; // Ждем article
+  if (!article) {
+    return (
+      <div className="article-page__spin">
+        <i className="bx bx-revision spin" />
+        <div className="article-loading">Loading</div>
+      </div>
+    );
+  } // Ждем article
 
   const onSubmit = async (data) => {
     try {
       const response = await fetch(
-        `https://realworld.habsida.net/api/articles/${article.slug}`,
+        `https://realworld.habsida.net/api/articles/${slug}`,
         {
           method: 'PUT',
           headers: {
@@ -62,33 +94,38 @@ function EditArticle({ user }) {
     }
   };
 
+  const handleAddFavoriteArticle = () => {};
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="article-page">
         <div className="page">
-          <label>
-            Заголовок
+          <label htmlFor="title">
+            Title
             <input
+              id="tite"
               className="new-article article-page__title"
               {...register('title', { required: true })}
             />
           </label>
-          <label>
-            Описание
+          <label htmlFor="description">
+            Description
             <input
+              id="description"
               className="new-article article-page__description"
               {...register('description', { required: true })}
             />
           </label>
-          <label>
-            Содержание текста
+          <label htmlFor="content">
+            Content
             <textarea
+              id="content"
               className="new-article article-page__body"
-              {...register('body', { required: true })}
+              {...register('content', { required: true })}
             />
           </label>
 
-          <button type="submit">Сохранить</button>
+          <button type="submit">Save</button>
         </div>
       </div>
     </form>

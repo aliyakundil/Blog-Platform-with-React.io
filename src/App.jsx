@@ -10,12 +10,30 @@ import ArticlesPage from './pages/ArticlesPage';
 import AuthForm from './auth/AuthForm';
 import Register from './auth/Register';
 import Page from './auth/Page';
-import Profile from './auth/Profile';
+import Settings from './auth/Settings';
 import NewArticle from './pages/NewArticle';
 import EditArticle from './pages/EditArticle';
+import Profile from './pages/Profile';
 
 function App() {
   const [user, setUser] = useState(null);
+
+  const toggleFavorite = (articleSlug) => {
+    if (!user) return;
+
+    const updatedFavorites = user.favoriteArticles?.includes(articleSlug)
+      ? user.favoriteArticles.filter((slug) => slug !== articleSlug)
+      : [...(user.favoriteArticles || []), articleSlug];
+
+    const updatedUser = { ...user, favoriteArticles: updatedFavorites };
+    setUser(updatedUser);
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+  };
+
+  const isFavorite = (articleSlug) => user?.favoriteArticles?.includes(articleSlug);
+
+  console.log(isFavorite)
+
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
@@ -31,10 +49,19 @@ function App() {
   return (
     <BrowserRouter>
       <Navigator user={user} setUser={setUser} />
-      <Hero />
+      {/* <Hero /> */}
       <Routes>
         <Route path="/" element={<ArticlesPage />} />
-        <Route path="/articles/:slug" element={<ArticlePage user={user} />} />
+        <Route
+          path="/articles/:slug"
+          element={(
+            <ArticlePage
+              user={user}
+              toggleFavorite={toggleFavorite}
+              isFavorite={isFavorite}
+            />
+          )}
+        />
         <Route
           path="/new-article"
           element={
@@ -58,15 +85,16 @@ function App() {
         <Route path="/sign-in" element={<Page setUser={setUser} />} />
         <Route path="/sign-up" element={<Register setUser={setUser} />} />
         <Route
-          path="/profile"
+          path="/settings"
           element={
             user ? (
-              <Profile user={user} setUser={setUser} />
+              <Settings user={user} setUser={setUser} />
             ) : (
               <AuthForm user={user} setUser={setUser} />
             )
           }
         />
+        <Route path="/profile" element={<Profile user={user} setUser={setUser} />} />
       </Routes>
     </BrowserRouter>
   );
