@@ -32,7 +32,7 @@ function App() {
 
   const isFavorite = (articleSlug) => user?.favoriteArticles?.includes(articleSlug);
 
-  console.log(isFavorite)
+  console.log(isFavorite);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');

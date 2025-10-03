@@ -3,6 +3,7 @@ function Pagination({ currentPage, onPageChange, pages }) {
     <div className="pagination" style={{ marginTop: '20px' }}>
       {pages.map((page) => (
         <button
+          type="button"
           key={page}
           onClick={() => onPageChange(page)}
           className={`paginator__numbers ${currentPage === page ? 'active' : ''}`}

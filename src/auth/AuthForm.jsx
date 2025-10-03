@@ -48,14 +48,12 @@ function AuthForm({
         />
         {errors.confirmPassword && <span>Passwords do not match</span>}
 
-        <label className="checkbox">
-          <input
-            type="checkbox"
-            {...register('agreement', { required: true })}
-          />
-          {' '}
-          Consent is required
-        </label>
+        <input
+          type="checkbox"
+          {...register('agreement', { required: true })}
+        />
+        {' '}
+        Consent is required
         {errors.agreement && <span>Consent is required</span>}
 
         <button type="submit" className="btn-sign">Sign Up</button>

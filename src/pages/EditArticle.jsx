@@ -99,33 +99,23 @@ function EditArticle({ user }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="article-page">
-        <div className="page">
-          <label htmlFor="title">
-            Title
-            <input
-              id="tite"
-              className="new-article article-page__title"
-              {...register('title', { required: true })}
-            />
-          </label>
-          <label htmlFor="description">
-            Description
-            <input
-              id="description"
-              className="new-article article-page__description"
-              {...register('description', { required: true })}
-            />
-          </label>
-          <label htmlFor="content">
-            Content
-            <textarea
-              id="content"
-              className="new-article article-page__body"
-              {...register('content', { required: true })}
-            />
-          </label>
-
-          <button type="submit">Save</button>
+        <div className="sign">
+          <input
+            id="tite"
+            className="new-article article-page__title"
+            {...register('title', { required: true })}
+          />
+          <input
+            id="description"
+            className="new-article article-page__description"
+            {...register('description', { required: true })}
+          />
+          <textarea
+            id="content"
+            className="new-article article-page__body"
+            {...register('content', { required: true })}
+          />
+          <button type="submit" className="btn-sign">Save</button>
         </div>
       </div>
     </form>
