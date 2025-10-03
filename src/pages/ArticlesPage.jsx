@@ -10,39 +10,12 @@ const API_URL = 'https://realworld.habsida.net/api/articles';
 function ArticlesPage() {
   const [articles, setArticles] = useState([]);
 
-  // useEffect(() => {
-  //   fetch(API_URL)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setArticles(data.articles);
-  //     })
-  //     .catch((err) => console.error('Ошибка загрузки', err));
-  // }, []);
-
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const res = await fetch(`${API_URL}?limit=100`); // все статьи для фильтрации
-        const data = await res.json();
-        setArticles(data.articles || []);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchArticles();
-  }, []);
-
   /* Пагинация */
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const itemsPerPage = 3;
-
-  const pages = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push(i);
-  }
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -66,6 +39,11 @@ function ArticlesPage() {
 
     fetchArticles();
   }, [currentPage]);
+
+  const pages = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push(i);
+  }
 
   // Лайки
   const handleLikes = (slug) => {
