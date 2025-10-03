@@ -10,14 +10,14 @@ const API_URL = 'https://realworld.habsida.net/api/articles';
 function ArticlesPage() {
   const [articles, setArticles] = useState([]);
 
-  useEffect(() => {
-    fetch(API_URL)
-      .then((res) => res.json())
-      .then((data) => {
-        setArticles(data.articles);
-      })
-      .catch((err) => console.error('Ошибка загрузки', err));
-  }, []);
+  // useEffect(() => {
+  //   fetch(API_URL)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setArticles(data.articles);
+  //     })
+  //     .catch((err) => console.error('Ошибка загрузки', err));
+  // }, []);
 
   useEffect(() => {
     const fetchArticles = async () => {
